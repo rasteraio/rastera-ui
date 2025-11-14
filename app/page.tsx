@@ -174,7 +174,7 @@ const handleRun = async () => {
                 cursor: "pointer",
               }}
             >
-              Launch console
+              Launch console DEBUG
             </button>
           </div>
         </header>
