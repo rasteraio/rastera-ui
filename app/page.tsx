@@ -61,16 +61,43 @@ export default function RasteraPage() {
     "Rastera will summarize your analysis pipeline here – think of it as your GeoAI copilot for rasters."
   );
 
-  const handleRun = () => {
-    setIsRunning(true);
-    setTimeout(() => {
-      setResult(
-        "✓ Workflow created: 2018 & 2024 land-use rasters loaded → reprojected → change matrix computed → flood depth raster overlaid → high-risk parcels tagged and exported as GeoPackage + GeoTIFF."
-      );
-      setIsRunning(false);
-    }, 900);
-  };
+const handleRun = async () => {
+  setIsRunning(true);
+  setResult("Thinking through your GeoAI pipeline…");
 
+  try {
+    const res = await fetch("/api/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    // Prefer narrative from backend; fall back to listing pipeline steps
+    if (data.narrative) {
+      setResult(data.narrative);
+    } else if (Array.isArray(data.pipeline)) {
+      const stepsText = data.pipeline
+        .map((step: any) => `${step.order}. ${step.name} – ${step.description}`)
+        .join("\n");
+      setResult(stepsText || "Rastera returned a response, but it was empty.");
+    } else {
+      setResult("Rastera returned a response, but it had no narrative or pipeline.");
+    }
+  } catch (err) {
+    console.error(err);
+    setResult(
+      "⚠️ Something went wrong talking to the Rastera GeoAI backend. Check the logs or try again."
+    );
+  } finally {
+    setIsRunning(false);
+  }
+};
   return (
     <main
       style={{
