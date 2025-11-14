@@ -2,13 +2,6 @@
 
 import { useState } from "react";
 
-const examplePrompts = [
-  "Map land-use change and flood risk for Arlington County, VA from 2018–2024",
-  "Detect shoreline retreat hotspots along the North Carolina coast using 10 m DEMs",
-  "Generate a GeoTIFF of wildfire susceptibility for Sonoma County using slope + aspect + fuel",
-  "Rank parcels in Gdańsk by exposure to sunny-day flooding at 0.5 m sea-level rise",
-];
-
 const metrics = [
   { label: "Raster jobs automated", value: "10,000+" },
   { label: "Time saved per study", value: "→ 90%" },
