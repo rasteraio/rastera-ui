@@ -53,18 +53,11 @@ export default function RasteraPage() {
   const [result, setResult] = useState<string | null>(
     "Rastera will summarize your analysis pipeline here – think of it as your GeoAI copilot for rasters."
   );
-
 const handleRun = async () => {
   setIsRunning(true);
-  setResult("Thinking through your GeoAI pipeline…");
-
-  try {
-    const res = await fetch("/api/analyze", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt }),
-    });
-
+  setResult("DEBUG: ECHO → " + prompt);
+  setIsRunning(false);
+};
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}`);
     }
