@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Rastera",
-  description: "No-code GeoAI platform for raster analytics",
+  description: "Your GIS platform for GeoAI applications",
 };
 
 export default function RootLayout({
